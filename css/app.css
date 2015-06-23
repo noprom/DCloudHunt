@@ -1,0 +1,21 @@
+/**
+ * 重写mui默认样式
+ */
+/*首页列表*/
+
+.main-list {
+	margin-top: 50px;
+}
+.mui-table-view-cell {
+	height: 240px;
+	margin-bottom: 8px;
+}
+.img-box {
+	height: 180px;
+	display: block;
+}
+.img-box img {
+	display: block;
+	width: 100%;
+	height: 95%;
+}
