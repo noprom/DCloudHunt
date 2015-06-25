@@ -3,129 +3,17 @@
 
 	<head>
 		<meta charset="utf-8">
+		<title>Hello MUI</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<title>DCloudHunt</title>
-		<script src="js/mui.min.js"></script>
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/app.css" rel="stylesheet" />
 
-		<script type="text/javascript" charset="utf-8">
-			 //取消浏览器的所有事件，使得active的样式在手机上正常生效
-			document.addEventListener('touchstart', function() {
-				return false;
-			}, true);
-			 // 禁止选择
-			document.oncontextmenu = function() {
-				return false;
-			};
-			 // H5 plus事件处理
-			var as = 'pop-in'; // 默认窗口动画
-			function plusReady() {
-				// 隐藏滚动条
-				plus.webview.currentWebview().setStyle({
-					scrollIndicator: 'none'
-				});
-				// Android处理返回键
-				plus.key.addEventListener('backbutton', function() {
-					if (confirm('确认退出？')) {
-						plus.runtime.quit();
-					}
-				}, false);
-				compatibleAdjust();
-			}
-			if (window.plus) {
-				plusReady();
-			} else {
-				document.addEventListener('plusready', plusReady, false);
-			}
-			 // DOMContentLoaded事件处理
-			var _domReady = false;
-			document.addEventListener('DOMContentLoaded', function() {
-				_domReady = true;
-				compatibleAdjust();
-			}, false);
-			 // 兼容性样式调整
-			var _adjust = false;
+		<link rel="stylesheet" href="css/mui.min.css">
 
-			function compatibleAdjust() {
-					if (_adjust || !window.plus || !_domReady) {
-						return;
-					}
-					_adjust = true;
-					// iOS平台使用div的滚动条
-					if ('iOS' == plus.os.name) {
-						document.getElementById('content').className = 'scontent';
-					}
-					// 预创建二级窗口
-					//	preateWebviews();
-					// 关闭启动界面
-					setTimeout(function() {
-						plus.navigator.closeSplashscreen();
-					}, 500);
-				}
-				// 请求服务器数据
-			var table = document.body.querySelector('#main-list');
-			mui.ajax('http://v.huntdreams.com/opensns/index.php?s=/api/index/index.html', {
-				data: {
-					category: 'news'
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				success: function(data) {
-					$.each(data, function(i, n) {
-						console.log("title = "+n.title);
-						console.log("description = "+n.description);
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell mui-media';
-						li.innerHTML = '<a href="" class="img-box"><img src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg" alt="" /></a>' + '<a href="#"><img class="mui-media-object mui-pull-left" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg"><div class="mui-media-body">' + n.title + '<p class="mui-ellipsis">' + n.description + '</p></div></a>';
-						//下拉刷新，新纪录插到最前面；
-						table.insertBefore(li, table.firstChild);
-					});
-				}
-			}
-			});
-		</script>
 	</head>
 
 	<body>
 
-		<!--头部-->
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-icon mui-icon-bars mui-pull-left"></a>
-			<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
-			<h1 class="mui-title">DCloudHunt</h1>
-		</header>
-		<!--头部end-->
-
-		<!--图文列表-->
-		<div id="content" class="content">
-			<div id="main-list" class="main-list">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-hidden">cared
-						<div id="M_Toggle" class="mui-switch mui-active">
-							<div class="mui-switch-handle"></div>
-						</div>
-					</li>
-					<li class="mui-table-view-cell mui-media">
-						<a href="" class="img-box">
-							<img src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg" alt="" />
-						</a>
-						<a href="#">
-							<img class="mui-media-object mui-pull-left" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
-							<div class="mui-media-body">
-								幸福
-								<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-							</div>
-						</a>
-					</li>
-
-				</ul>
-			</div>
-		</div>
-
-		<!--图文列表end-->
 	</body>
 
 </html>
