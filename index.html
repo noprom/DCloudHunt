@@ -3,17 +3,99 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>你好DCloud</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="css/mui.min.css">
-
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+		</style>
 	</head>
 
 	<body>
-	
+		<!--头部开始-->
+		<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title">DCloud</h1>
+		</header>
+		<!--头部结束-->
+
+		<!--底部tab开始-->
+		<nav class="mui-bar mui-bar-tab">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="ui/about.html">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="ui/chat.html">
+				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
+				<span class="mui-tab-label">消息</span>
+			</a>
+			<a class="mui-tab-item" href="ui/contact.html">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">通讯录</span>
+			</a>
+			<a class="mui-tab-item" href="ui/setting.html">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">设置</span>
+			</a>
+		</nav>
+		<!--底部tab结束-->
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			 //mui初始化
+			mui.init();
+			 // 子页面
+			var subPages = ['ui/about.html', 'ui/chat.html', 'ui/contact.html', 'ui/setting.html'];
+			var subPage_style = {
+				top: '46px',
+				bottom: '50px'
+			};
+			 //创建子页面，首个选项卡页面显示，其它均隐藏；
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview(); // 当前的webview
+				for (var i = 0; i < 4; i++) {
+					var sub = plus.webview.create(subPages[i], subPages[i], subPage_style); //子窗口
+					if (i > 0) {
+						sub.hide();
+					}
+					self.append(sub);
+				}
+			});
+			 // 当前激活选项设置
+			var activeTab = subPages[0];
+			var title = document.getElementById("title");
+			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				var targetTab = this.getAttribute('href');
+				if (targetTab == activeTab) { // 如果是当前选项则返回
+					return;
+				}
+				//更换标题
+				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+				//显示目标选项卡
+				plus.webview.show(targetTab);
+				//隐藏当前;
+				plus.webview.hide(activeTab);
+				//更改当前活跃的选项卡
+				activeTab = targetTab;
+			});
+			//自定义事件，模拟点击“首页选项卡”
+			document.addEventListener('gohome', function() {
+				var defaultTab = document.getElementById("defaultTab");
+				//模拟首页点击
+				mui.trigger(defaultTab, 'tap');
+				//切换选项卡高亮
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if (defaultTab !== current) {
+					current.classList.remove('mui-active');
+					defaultTab.classList.add('mui-active');
+				}
+			});
+		</script>
+
 	</body>
 
 </html>
