@@ -42,6 +42,39 @@ function articlelist() {
 	mui('#refreshContainer').pullRefresh().endPullupToRefresh();
 }
 
-mui.ready(function(){
+/**
+ * 显示文章详情
+ * @param {Object} art
+ */
+function articleshow(art) {
+	var article = 'http://c.3g.163.com/nc/article/' + art + '/full.html';
+	mui.ajax(article, {
+		dataType: 'json', //服务器返回json格式数据
+		type: 'get', //HTTP请求类型
+		timeout: 10000, //超时时间设置为10秒；
+		success: function(data) {
+			var content = data[art];
+			var tpl = "article_show.html";
+			var url = content.template == 'webview' ? content.link[0].href : tpl;
+			
+			mui.openWindow({
+				"url": plus.os.name == "iOS" ? tpl : url,
+				"id": art,
+				"crateNew": false,
+				"extras": {
+					"article": content
+				},
+				"waiting": {
+					autoShow: true,
+					title: 'Loading...',
+				}
+			});
+		},
+		error: function(xhr, type, errorThrown) {
+			console.log(xhr + ":" + type + ":" + errorThrown);
+		}
+	});
+}
+mui.ready(function() {
 	articlelist();
 });
