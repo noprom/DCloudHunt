@@ -37,7 +37,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script>
-			 //初始化mui
+			//初始化mui
 			mui.init({
 				preloadPages: [{
 					url: 'ui/news-detail.html'
@@ -112,13 +112,15 @@
 				var href = this.href;
 				// 打开新闻详情页面及其设置
 				var aniShow = "pop-in";
-				var webview_style = {
-					popGesture: "close"
-				};
+
 				mui.openWindow({
 					id: id,
 					url: this.href,
-					styles: webview_style,
+					styles: {
+						top:'0px',
+						bottom:'50px',
+						popGesture: "close"
+					},
 					show: {
 						aniShow: aniShow
 					},
